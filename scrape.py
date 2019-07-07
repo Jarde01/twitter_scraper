@@ -220,8 +220,13 @@ def handler(event, context):
     # politician_list = json.loads(file_content)
     global twitter_error_code
 
+    year = "2019"
+    month = "07"
+    date = "03"
+
     today_date = str(datetime.datetime.now())[:10]
-    yesterday_date = f"{today_date[:-1]}{str(int(str(datetime.datetime.now())[:10][-1:])-1)}"
+    from_date = f"{year}-{month}-{date}"
+    # yesterday_date = f"{today_date[:-1]}{str(int(str(datetime.datetime.now())[:10][-1:])-1)}"
 
     chunk_size = 100
     parent_dir = "data"
@@ -235,7 +240,7 @@ def handler(event, context):
         os.makedirs(data_folder_name)
 
     # for index, filename in enumerate(filenames):
-    for dirpath, dirnames, filenames in os.walk(os.path.join(parent_dir, person_dir, yesterday_date)):
+    for dirpath, dirnames, filenames in os.walk(os.path.join(parent_dir, person_dir, from_date)):
         for filename in filenames:
             print(f"Starting processing on {filename}")
             politician_list = get_politicians_from_csv(os.path.join(dirpath, filename))
